@@ -16,7 +16,7 @@ Claude Code fires two events this project listens to:
 - `Notification` — Claude is waiting for user approval or input
 
 On either event, `claude-focus.sh` runs and:
-1. Walks up the PPID chain to find the terminal emulator's window, then calls `kdotool windowactivate` (KDE Wayland native)
+1. Walks up the PPID chain to identify the terminal emulator by process name, maps it to a kdotool window class, and calls `kdotool windowactivate` (KDE Wayland native; `--pid` search doesn't work for terminal emulators)
 2. Switches to the correct tab using a terminal-specific method (see below)
 3. Sends a desktop notification via `notify-send`
 
