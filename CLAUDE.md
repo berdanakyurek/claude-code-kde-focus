@@ -16,9 +16,19 @@ Claude Code fires two events this project listens to:
 - `Notification` — Claude is waiting for user approval or input
 
 On either event, `claude-focus.sh` runs and:
-1. Calls `kdotool windowactivate` to raise the Konsole window (KDE Wayland native)
-2. Calls `qdbus ... setCurrentSession` to switch to the correct Konsole tab
+1. Walks up the PPID chain to find the terminal emulator's window, then calls `kdotool windowactivate` (KDE Wayland native)
+2. Switches to the correct tab using a terminal-specific method (see below)
 3. Sends a desktop notification via `notify-send`
+
+## Supported terminals
+
+Tab switching is supported for:
+- **Konsole** — via `qdbus setCurrentSession` (detected via `$KONSOLE_DBUS_SERVICE`)
+- **Yakuake** — uses Konsole backend, covered automatically
+- **Kitty** — via `kitty @ focus-window` (requires `allow_remote_control yes` and `listen_on` in kitty config; detected via `$KITTY_LISTEN_ON`)
+- **WezTerm** — via `wezterm cli activate-pane` (detected via `$WEZTERM_PANE`)
+
+Any other terminal (Alacritty, foot, xterm, etc.) still gets window focus via the PPID walk, just without tab switching.
 
 ## Key constraints
 
