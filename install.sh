@@ -43,6 +43,17 @@ HOOK_JSON='{
           }
         ]
       }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.local/bin/claude-focus.sh"
+          }
+        ]
+      }
     ]
   }
 }'

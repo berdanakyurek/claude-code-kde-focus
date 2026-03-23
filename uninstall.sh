@@ -24,7 +24,7 @@ fi
 # --- Remove Claude Code Stop hook ---
 CLAUDE_SETTINGS="$HOME/.claude/settings.json"
 if [ -f "$CLAUDE_SETTINGS" ]; then
-    CLEANED=$(jq 'del(.hooks.Stop)' "$CLAUDE_SETTINGS")
+    CLEANED=$(jq 'del(.hooks.Stop) | del(.hooks.Notification)' "$CLAUDE_SETTINGS")
     # Remove .hooks entirely if now empty
     CLEANED=$(echo "$CLEANED" | jq 'if .hooks == {} then del(.hooks) else . end')
     echo "$CLEANED" > "$CLAUDE_SETTINGS"
