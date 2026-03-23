@@ -1,0 +1,65 @@
+#+title: claude-code-kde-focus
+#+author: Berdan Akyürek
+
+Brings the Konsole window and the correct tab to the foreground whenever
+Claude Code finishes a task or asks for approval — just like how a debugger
+pops up when it hits a breakpoint.
+
+* Requirements
+
+- KDE Plasma 6 on Wayland
+- Konsole
+- =kdotool= — KDE Wayland window management tool
+- =qdbus= — Qt DBus utility
+- =jq= — JSON processor
+- =kwriteconfig6= — KDE config writer
+
+* Install
+
+#+begin_src shell
+git clone https://github.com/berdanakyurek/claude-code-kde-focus
+cd claude-code-kde-focus
+./install.sh
+#+end_src
+
+The installer will:
+
+1. Check all dependencies
+2. Copy =claude-focus.sh= to =~/.local/bin/=
+3. Register =Stop= and =Notification= hooks in =~/.claude/settings.json=
+4. Set KDE Focus Stealing Prevention to =None= via =kwinrc=
+
+* Uninstall
+
+#+begin_src shell
+./uninstall.sh
+#+end_src
+
+Removes the script, cleans up the Claude Code hooks, and restores
+KDE Focus Stealing Prevention to its default (Medium).
+
+* How it works
+
+Claude Code supports shell hooks that fire on specific events.
+This project hooks into two of them:
+
+| Hook           | When it fires                              |
+|----------------+--------------------------------------------|
+| =Stop=         | Claude finishes a response                 |
+| =Notification= | Claude is waiting for approval or input    |
+
+When either hook fires, =claude-focus.sh= does the following:
+
+1. Uses =kdotool= to activate the Konsole window (KDE Wayland native)
+2. Uses =qdbus= to switch to the specific Konsole tab running Claude Code
+3. Sends a desktop notification via =notify-send=
+
+* Why kdotool?
+
+On KDE Wayland, =xdotool= and =wmctrl= do not work for native Wayland windows.
+=QWidget::raise()= via DBus does not steal focus either due to compositor
+security restrictions. =kdotool= uses the =kde-plasma-window-management=
+Wayland protocol, which KWin exposes specifically for this purpose.
+
+KDE's Focus Stealing Prevention must be set to =None= for =kdotool windowactivate=
+to actually bring the window to the foreground.
