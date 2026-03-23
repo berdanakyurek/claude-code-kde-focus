@@ -14,6 +14,6 @@ if [ -n "$KONSOLE_DBUS_SERVICE" ] && [ -n "$KONSOLE_DBUS_SESSION" ]; then
         org.kde.konsole.Window.setCurrentSession "$SESSION_ID" 2>/dev/null
 fi
 
-notify-send "Claude Code" "Hazır" -i utilities-terminal 2>/dev/null
+notify-send "Claude Code" "Ready" -i utilities-terminal 2>/dev/null
 
 exit 0
