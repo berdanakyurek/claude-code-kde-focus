@@ -5,7 +5,6 @@
 terminal_class() {
     case "$1" in
         konsole)               echo "konsole" ;;
-        yakuake)               echo "yakuake" ;;
         kitty)                 echo "kitty" ;;
         alacritty)             echo "Alacritty" ;;
         wezterm-gui)           echo "org.wezfurlong.wezterm" ;;

@@ -24,7 +24,6 @@ On either event, `claude-focus.sh` runs and:
 
 Tab switching is supported for:
 - **Konsole** — via `qdbus setCurrentSession` (detected via `$KONSOLE_DBUS_SERVICE`)
-- **Yakuake** — uses Konsole backend, covered automatically
 - **Kitty** — via `kitty @ focus-window` (requires `allow_remote_control yes` and `listen_on` in kitty config; detected via `$KITTY_LISTEN_ON`)
 - **WezTerm** — via `wezterm cli activate-pane` (detected via `$WEZTERM_PANE`)
 

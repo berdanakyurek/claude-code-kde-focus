@@ -6,14 +6,14 @@ Claude Code finishes a task or asks for approval — just like how a debugger
 pops up when it hits a breakpoint.
 
 Works with any terminal on KDE Wayland. Tab switching is supported for
-Konsole, Yakuake, Kitty, and WezTerm. Other terminals (Alacritty, foot,
+Konsole, Kitty, and WezTerm. Other terminals (Alacritty, foot,
 xterm, etc.) still get window focus, just without tab switching.
 
 * Requirements
 
 - KDE Plasma 6 on Wayland
 - =kdotool= — KDE Wayland window management tool
-- =qdbus= — Qt DBus utility (Konsole/Yakuake tab switching)
+- =qdbus= — Qt DBus utility (Konsole tab switching)
 - =jq= — JSON processor
 - =kwriteconfig6= — KDE config writer
 
@@ -60,7 +60,6 @@ When either hook fires, =claude-focus.sh= does the following:
 | Terminal       | Method                         | Detection                  |
 |----------------+--------------------------------+----------------------------|
 | Konsole        | =qdbus setCurrentSession=      | =$KONSOLE_DBUS_SERVICE=    |
-| Yakuake        | same (Konsole backend)         | =$KONSOLE_DBUS_SERVICE=    |
 | Kitty          | =kitty @ focus-window=         | =$KITTY_LISTEN_ON=         |
 | WezTerm        | =wezterm cli activate-pane=    | =$WEZTERM_PANE=            |
 | Other          | window focus only              | —                          |
